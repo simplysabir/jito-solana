@@ -41,6 +41,7 @@ use {
         time::{Duration, Instant},
     },
 };
+use std::str::FromStr;
 
 type ReserveBundleBlockspaceResult<'a> = BundleExecutionResult<(
     Vec<transaction::Result<TransactionCost<'a, RuntimeTransaction<SanitizedTransaction>>>>,
@@ -90,7 +91,7 @@ impl BundleConsumer {
         max_bundle_retry_duration: Duration,
         cluster_info: Arc<ClusterInfo>,
     ) -> Self {
-        let blacklisted_accounts = HashSet::from_iter([tip_manager.tip_payment_program_id()]);
+        let mut blacklisted_accounts = HashSet::from_iter([tip_manager.tip_payment_program_id()]);
         blacklisted_accounts
             .insert(Pubkey::from_str("KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD").unwrap());
         blacklisted_accounts
